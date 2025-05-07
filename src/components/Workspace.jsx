@@ -31,6 +31,9 @@ const Workspace = () => {
     }),
   );
   const addNewColumnHandler = () => {
+    if (!dataState || dataState.length === 0) {
+      return;
+    }
     setDataState((prev) =>
       produce(prev, (draft) => {
         const newColumn = {
