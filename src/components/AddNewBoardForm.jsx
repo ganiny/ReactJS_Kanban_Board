@@ -14,7 +14,7 @@ const AddNewBoardForm = ({
   const [columnsArray, setColumnsArray] = useState(columns);
 
   const removeColumnHandler = (id) => {
-    setColumnsArray((prev) => prev.filter((column) => column.id !== id));
+    setColumnsArray((prev) => prev?.filter((column) => column.id !== id));
   };
 
   const addNewColumnHandler = () => {
@@ -22,7 +22,7 @@ const AddNewBoardForm = ({
   };
 
   const createNewColumnsArray = (formData, columnsArray, boardId) => {
-    return columnsArray.map((column) => {
+    return columnsArray?.map((column) => {
       const tasksArray = boardId ? column.tasks : [];
       return {
         id: column.id,
@@ -37,7 +37,7 @@ const AddNewBoardForm = ({
      
       let newData;
       if (boardId) {
-        newData = prev.map((item) => {
+        newData = prev?.map((item) => {
           if (item.id === boardId) {
             return {
               ...item,
@@ -58,7 +58,7 @@ const AddNewBoardForm = ({
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const boardName = formData.get("boardName");
+    const boardName = formData?.get("boardName");
     const newColumnsArray = createNewColumnsArray(
       formData,
       columnsArray,

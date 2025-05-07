@@ -12,7 +12,7 @@ const Header = () => {
 
   const onDeleteBoard = () => {
     if (window.confirm("Are you sure you want to delete this board?")) {
-      setDataState((prev) => prev.toSpliced(selectedBoardIndex, 1));
+      setDataState((prev) => prev?.toSpliced(selectedBoardIndex, 1));
     }
   };
   return (
