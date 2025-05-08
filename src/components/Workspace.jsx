@@ -100,13 +100,13 @@ const Workspace = () => {
 
     if (overColumnId && activeColumnId !== overColumnId) {
       const newColumns = columns?.map((column) => {
-        let tasks;
+        let tasks = [];
         if (column.id === overColumnId) {
           const activeTask = columns
             ?.find((column) => column.id === activeColumnId)
             .tasks?.find((task) => task.id === activeId);
           if (!column.tasks || column.tasks.length === 0) tasks = [activeTask];
-          tasks = [...column.tasks, activeTask];
+          tasks = [...(column?.tasks) || [], activeTask];
 
           return {
             ...column,
