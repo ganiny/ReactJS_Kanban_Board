@@ -52,12 +52,11 @@ const Workspace = () => {
       return tasksIds;
     }
     columns?.forEach((column) => {
-      tasksIds = [...tasksIds, ...column.tasks.map((task) => task.id)];
+      tasksIds = [...tasksIds, ...(column.tasks?.map((task) => task.id) || [])];
     });
 
     return tasksIds;
   }, [columns]);
-
 
   const onDragEndHandler = (event) => {
     const { active, over } = event;
@@ -67,12 +66,12 @@ const Workspace = () => {
     const overColumnId = over.data.current.columnId;
     if (activeId === overId) return;
     if (activeColumnId === overColumnId) {
-      const newColumns = columns.map((column) => {
+      const newColumns = columns?.map((column) => {
         if (column.id === activeColumnId) {
-          const activeIdIndex = column.tasks.findIndex(
+          const activeIdIndex = column.tasks?.findIndex(
             (task) => task.id === activeId,
           );
-          const overIdIndex = column.tasks.findIndex(
+          const overIdIndex = column.tasks?.findIndex(
             (task) => task.id === overId,
           );
           const tasks = arrayMove(column.tasks, activeIdIndex, overIdIndex);
@@ -99,15 +98,14 @@ const Workspace = () => {
     const activeColumnId = active?.data?.current?.columnId;
     const overColumnId = over?.data?.current?.columnId;
 
-    
     if (overColumnId && activeColumnId !== overColumnId) {
-      const newColumns = columns.map((column) => {
+      const newColumns = columns?.map((column) => {
         let tasks;
         if (column.id === overColumnId) {
           const activeTask = columns
-          .find((column) => column.id === activeColumnId)
-          .tasks.find((task) => task.id === activeId);
-          if(!column.tasks || column.tasks.length === 0) tasks = [activeTask];
+            ?.find((column) => column.id === activeColumnId)
+            .tasks?.find((task) => task.id === activeId);
+          if (!column.tasks || column.tasks.length === 0) tasks = [activeTask];
           tasks = [...column.tasks, activeTask];
 
           return {
@@ -117,7 +115,7 @@ const Workspace = () => {
         }
 
         if (column.id === activeColumnId) {
-          const tasks = column.tasks.filter((task) => task.id !== activeId);
+          const tasks = column.tasks?.filter((task) => task.id !== activeId);
 
           return {
             ...column,
@@ -144,7 +142,7 @@ const Workspace = () => {
       <div className="flex h-[calc(100vh-97px)] flex-1 gap-6 overflow-auto bg-light-grey p-6">
         <SortableContext items={tasksIds}>
           {columns?.length &&
-            columns.map((column, index) => (
+            columns?.map((column, index) => (
               <Column
                 key={column.id}
                 id={column.id}
